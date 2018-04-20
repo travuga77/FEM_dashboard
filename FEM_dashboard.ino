@@ -60,7 +60,6 @@ void loop()
 
 //byte keys = module.getButtons();
   // light the first 4 red LEDs and the last 4 green LEDs as the buttons are pressed
-  
  
 
 
