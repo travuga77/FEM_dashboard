@@ -3,6 +3,7 @@
 #include <mcp_can.h>
 #include <SPI.h>
 #include <TM1638.h>
+#include <avr/wdt.h>
 
 // define a module o n data pin 5, clock pin 6 and strobe pin 7
 TM1638 module(5, 6, 7);
@@ -30,6 +31,7 @@ unsigned int ReadBytesFrom(byte len, byte beg)
 
 void setup()
 {
+  wdt_enable(WDTO_2S);
   Serial.begin(115200);
 
   // Initialize MCP2515 running at 8MHz with a baudrate of 250kb/s and the masks and filters disabled.
@@ -50,6 +52,7 @@ void setup()
 byte data[8] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07};
 
 void loop() {
+  wdt_reset();
   if(!digitalRead(CAN0_INT))                         // If CAN0_INT pin is low, read receive buffer
   {
     CAN0.readMsgBuf(&rxId, &len, rxBuf);      // Read data: len = data length, buf = data byte(s)
